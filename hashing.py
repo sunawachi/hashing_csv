@@ -19,12 +19,12 @@ def main():
 
 def get_csv_name():
     try:
-        csv_name = str(input('Please input name of target csv: '))
+        str = str(input('Please input name of target csv: '))
     except ValueError:
         print("invalid input")
         exit()
-    if csv_name[-4:] == ".csv":
-        return csv_name
+    if str[-4:] == ".csv":
+        return str
     else:
         print('Please input file of csv like "filename.csv".')
         exit()
