@@ -4,18 +4,21 @@ import os
 
 def main():
     data_name = get_csv_name()
-    if if_exsists_in_cd(data_name):
-        pass
-    else:
+
+    try:
+        df = pd.read_csv(data_name, header=0)
+    except:
         print('No such file or directory: "%s"'% data_name)
         exit()
-    df = pd.read_csv(data_name, header=0)
+
     target_column = get_target_column_name()
+
     if target_column in df.columns:
         pass
     else:
         print("The column with the specified name does not exist in the csv.")
         exit()
+
     hashed_df = hash_column(df, target_column)
     newname = genelate_new_csv_name(data_name)
     hashed_df.to_csv(newname)
@@ -32,12 +35,6 @@ def get_csv_name():
     else:
         print('Please input file of csv like "filename.csv".')
         exit()
-
-def if_exsists_in_cd(filename):
-    if os.access(filename, os.F_OK):
-        return True
-    else:
-        return False
 
 def get_target_column_name():
     try:
@@ -56,7 +53,7 @@ def hash_column(dataframe, columnname):
 
 def genelate_new_csv_name(filename):
     newname = filename[:-4] + "_hashed.csv"
-    if if_exsists_in_cd(newname):
+    if os.access(filename, os.F_OK):
         return genelate_new_csv_name(newname)
     else:
         return newname
