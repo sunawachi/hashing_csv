@@ -3,7 +3,7 @@ import hashlib
 import os
 
 def main():
-    data_name = get_string('Please input name of target csv: ')
+    data_name = let_input_string('Please input name of target csv: ')
 
     if data_name[-4:] == ".csv":
         pass
@@ -17,20 +17,20 @@ def main():
         print('No such file or directory: "%s"'% data_name)
         exit()
 
-    target_column = get_string('Please input name of target column: ')
+    target_column_name = let_input_string('Please input name of target column: ')
 
-    if target_column in df.columns:
+    if target_column_name in df.columns:
         pass
     else:
         print('The column with the specified name does not exist in the csv.')
         exit()
 
-    hashed_df = hash_column(df, target_column)
-    newname = genelate_new_csv_name(data_name)
-    hashed_df.to_csv(newname)
+    hashed_df = hash_column(df, target_column_name)
+    new_data_name = genelate_new_csv_name(data_name)
+    hashed_df.to_csv(new_data_name)
     print('The process has been completed.')
 
-def get_string(message):
+def let_input_string(message):
     try:
         return str(input(message))
     except ValueError:
