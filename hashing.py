@@ -17,7 +17,7 @@ def main():
         print("The column with the specified name does not exist in the csv.")
         exit()
     hashed_df = hash_column(df, target_column)
-    newname = new_csv_name(data_name)
+    newname = genelate_new_csv_name(data_name)
     hashed_df.to_csv(newname)
     print("The process has been completed.")
 
@@ -54,10 +54,10 @@ def hash_column(dataframe, columnname):
         dataframe.loc[dataframe.index[i], columnname] = m.digest()
     return dataframe
 
-def new_csv_name(filename):
+def genelate_new_csv_name(filename):
     newname = filename[:-4] + "_hashed.csv"
     if if_exsists_in_cd(newname):
-        return new_csv_name(newname)
+        return genelate_new_csv_name(newname)
     else:
         return newname
 
