@@ -3,26 +3,26 @@ import hashlib
 import os
 
 def main():
-    data_name = let_input_string('Please input name of target csv: ')
+    data_name = let_input_string('Please input the name of target csv in this directory like "filename.csv"\n: ')
 
     if data_name[-4:] == ".csv":
         pass
     else:
-        print('Please input file of csv like "filename.csv".')
+        print('Please input the name of csv like "filename.csv".')
         exit()
 
     try:
         df = pd.read_csv(data_name, header=0)
     except:
-        print('No such file or directory: "%s"'% data_name)
+        print('No such file in this directory: "%s"' % data_name)
         exit()
 
-    target_column_name = let_input_string('Please input name of target column: ')
+    target_column_name = let_input_string('Please input the name of target column in the csv\n:')
 
     if target_column_name in df.columns:
         pass
     else:
-        print('The column with the specified name does not exist in the csv.')
+        print('No such column in the csv: "%s"' % target_column_name)
         exit()
 
     hashed_df = hash_column(df, target_column_name)
