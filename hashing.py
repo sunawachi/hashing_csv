@@ -3,7 +3,13 @@ import hashlib
 import os
 
 def main():
-    data_name = get_csv_name()
+    data_name = get_string('Please input name of target csv: ')
+
+    if data_name[-4:] == ".csv":
+        pass
+    else:
+        print('Please input file of csv like "filename.csv".')
+        exit()
 
     try:
         df = pd.read_csv(data_name, header=0)
@@ -11,36 +17,24 @@ def main():
         print('No such file or directory: "%s"'% data_name)
         exit()
 
-    target_column = get_target_column_name()
+    target_column = get_string('Please input name of target column: ')
 
     if target_column in df.columns:
         pass
     else:
-        print("The column with the specified name does not exist in the csv.")
+        print('The column with the specified name does not exist in the csv.')
         exit()
 
     hashed_df = hash_column(df, target_column)
     newname = genelate_new_csv_name(data_name)
     hashed_df.to_csv(newname)
-    print("The process has been completed.")
+    print('The process has been completed.')
 
-def get_csv_name():
+def get_string(message):
     try:
-        s = str(input('Please input name of target csv: '))
+        return str(input(message))
     except ValueError:
-        print("invalid input")
-        exit()
-    if s[-4:] == ".csv":
-        return s
-    else:
-        print('Please input file of csv like "filename.csv".')
-        exit()
-
-def get_target_column_name():
-    try:
-        return str(input('Please input name of target column: '))
-    except ValueError:
-        print("invalid input")
+        print('could not convert the input to a string')
         exit()
 
 def hash_column(dataframe, columnname):
@@ -53,7 +47,7 @@ def hash_column(dataframe, columnname):
 
 def genelate_new_csv_name(filename):
     newname = filename[:-4] + "_hashed.csv"
-    if os.access(filename, os.F_OK):
+    if os.access(newname, os.F_OK):
         return genelate_new_csv_name(newname)
     else:
         return newname
