@@ -12,12 +12,12 @@ def main():
         exit()
 
     try:
-        df = pd.read_csv(data_name, header=0)
+        df = pd.read_csv(data_name, header=0, encoding="utf-8")
     except:
         print('No such file in this directory: "%s"' % data_name)
         exit()
 
-    target_column_name = let_input_string('Please input the name of target column in the csv\n:')
+    target_column_name = let_input_string('Please input the name of target column in the csv\n: ')
 
     if target_column_name in df.columns:
         pass
@@ -27,7 +27,7 @@ def main():
 
     hashed_df = hash_column(df, target_column_name)
     new_data_name = genelate_new_csv_name(data_name)
-    hashed_df.to_csv(new_data_name)
+    hashed_df.to_csv(new_data_name, encoding='utf_8_sig')
     print('The process has been completed.')
 
 def let_input_string(message):
