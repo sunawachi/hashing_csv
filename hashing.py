@@ -11,7 +11,11 @@ def main():
         exit()
     df = pd.read_csv(data_name, header=0)
     target_column = get_target_column_name()
-    check_if_the_column_exists_in_df(target_column, df)
+    if target_column in df.columns:
+        pass
+    else:
+        print("The column with the specified name does not exist in the csv.")
+        exit()
     hashed_df = hash_column(df, target_column)
     newname = new_csv_name(data_name)
     hashed_df.to_csv(newname)
@@ -40,13 +44,6 @@ def get_target_column_name():
         return str(input('Please input name of target column: '))
     except ValueError:
         print("invalid input")
-        exit()
-
-def check_if_the_column_exists_in_df(columnname, dataframe):
-    if columnname in dataframe.columns:
-        pass
-    else:
-        print("The column with the specified name does not exist in the csv.")
         exit()
 
 def hash_column(dataframe, columnname):
