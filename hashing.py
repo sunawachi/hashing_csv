@@ -3,7 +3,7 @@ import hashlib
 import os
 
 def main():
-    data_name = let_input_string('Please input the name of target csv in this directory like "filename.csv"\n: ')
+    data_name = let_input_string('Please input the name (with the path, if necessary) of target csv like "filename.csv"\n: ')
 
     if data_name[-4:] == ".csv":
         pass
